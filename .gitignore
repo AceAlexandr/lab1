@@ -1,0 +1,91 @@
+package shustov_7group_task_1;
+import java.util.Locale;
+import java.util.Scanner;
+/**
+ *
+ * @author User
+ */
+class Teilor{   
+    public static final int MIN_DEG = 1;
+    public static final int SHARE = 10;
+    public static final int LESS_ZERO = -1;
+    private double x;
+    private int k;
+    private double result;
+    private double eps;   
+    public Teilor(){
+        this.x = 0;
+        this.k = 0;
+        this.result = 0;
+        this.eps = 0;
+    };    
+    public Teilor(double x1 , int k1){
+        this.x = x1;
+        this.k = k1;
+        this.result = 0;        
+    };
+   public void erectionDegree(Teilor buf){
+    int e = 1;
+    int degree = buf.k;
+    while(degree != 0){
+        e = e / SHARE;
+        degree --;   
+    }
+    this.eps = e;
+};
+    public void calculation(Teilor buf){
+    erectionDegree(buf);
+    double res = 0;
+    int n = MIN_DEG;
+    double j = buf.x;
+    do{
+        res = res + j;
+        j = j *(buf.x * buf.x) / ((2 * n) * (2 * n + 1));
+        n++;
+    }while(j > buf.eps);
+    this.result = res;
+} ; 
+    public void scanInf (Teilor buf){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter k: ");
+        try{
+        this.k = Integer.parseInt(sc.nextLine());
+        if (this.k < 0){
+            this.k = this.k * LESS_ZERO;
+        }
+        }catch(NumberFormatException e){
+            this.k = 0;
+            System.out.println("Error , please enter another number");
+            this.k = Integer.parseInt(sc.nextLine());
+        }
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Enter x: ");
+        try{
+        this.x = Double.parseDouble(scan.nextLine());
+        }catch(NumberFormatException e){
+        this.x = 0;
+        System.out.println("You entered wrong number  , try again");
+        this.x = Double.parseDouble(scan.nextLine());
+        }        
+    }
+    public void printRes(Teilor buf){
+        System.out.println("Calcilation by Teilor: ");
+        System.out.printf(Locale.UK, "%.3f", buf.result);
+        System.out.println();
+        System.out.println("Calculating by standard functions: ");
+        System.out.printf(Locale.UK, "%.3f", Math.sinh(x));
+        System.out.println();
+    };
+};
+public class Shustov_7group_task_1 {
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+        Teilor buffer = new Teilor();
+        buffer.scanInf(buffer);
+        buffer.calculation(buffer);
+        buffer.printRes(buffer);        
+    }    
+}
